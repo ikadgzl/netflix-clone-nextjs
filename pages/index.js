@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import Banner from '../components/banner/Banner';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
@@ -12,6 +13,12 @@ export default function Home() {
       </Head>
 
       <h1>Netflix Clone</h1>
+
+      <Banner
+        title='Pirates of the Caribbean'
+        subTitle='The Curse of the Black Pearl'
+        imgUrl='/static/pirates.jpg'
+      />
     </div>
   );
 }
