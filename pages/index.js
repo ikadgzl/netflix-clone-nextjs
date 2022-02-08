@@ -2,15 +2,15 @@ import Head from 'next/head';
 import Banner from '../components/banner/banner';
 import SectionCards from '../components/card/section-cards';
 import Navbar from '../components/nav/navbar';
+import { getCommonVideos, getPopularVideos } from '../lib/videos';
 import styles from '../styles/Home.module.css';
 
-const dummy = [
-  { id: 0, imgUrl: '/static/pirates.jpg' },
-  { id: 1, imgUrl: '/static/pirates.jpg' },
-  { id: 2, imgUrl: '/static/pirates.jpg' }
-];
-
-export default function Home() {
+export default function Home({
+  disneyVideos,
+  travelVideos,
+  productivityVideos,
+  popularVideos
+}) {
   return (
     <div className={styles.container}>
       <Head>
@@ -28,10 +28,26 @@ export default function Home() {
       />
 
       <div className={styles.sectionWrapper}>
-        <SectionCards title='Large Movies' videos={dummy} size='large' />
-        <SectionCards title='Medium Movies' videos={dummy} size='medium' />
-        <SectionCards title='Small Movies' videos={dummy} size='small' />
+        <SectionCards title='Disney' videos={disneyVideos} size='large' />
+        <SectionCards title='Travel' videos={travelVideos} size='small' />
+        <SectionCards
+          title='Productivity'
+          videos={productivityVideos}
+          size='medium'
+        />
+        <SectionCards title='Popular' videos={popularVideos} size='small' />
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const disneyVideos = await getCommonVideos('disney trailer');
+  const travelVideos = await getCommonVideos('travel');
+  const productivityVideos = await getCommonVideos('productivity');
+  const popularVideos = await getPopularVideos();
+
+  return {
+    props: { disneyVideos, travelVideos, productivityVideos, popularVideos }
+  };
 }
