@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './navbar.module.css';
 
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
+import { magic } from '../../lib/magic';
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -28,6 +29,20 @@ const Navbar = () => {
 
     setShowDropdown(!showDropdown);
   };
+
+  useEffect(() => {
+    const getMetadata = async () => {
+      try {
+        const { email } = await magic.user.getMetadata();
+
+        setUsername(email);
+      } catch (error) {
+        console.log(errror);
+      }
+    };
+
+    getMetadata();
+  }, []);
 
   return (
     <div className={styles.container}>
