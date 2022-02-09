@@ -8,21 +8,9 @@ import { magic } from '../../lib/magic';
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [username, setUsername] = useState('Ilker');
+  const [username, setUsername] = useState('');
 
   const router = useRouter();
-
-  const handleOnClickHome = (e) => {
-    e.preventDefault();
-
-    router.push('/');
-  };
-
-  const handleOnClickMyList = (e) => {
-    e.preventDefault();
-
-    router.push('/browse/my-list');
-  };
 
   const handleShowDropdown = (e) => {
     e.preventDefault();
@@ -30,6 +18,18 @@ const Navbar = () => {
     setShowDropdown(!showDropdown);
   };
 
+  const handleSignout = async () => {
+    try {
+      await magic.user.logout();
+
+      router.push('/login');
+    } catch (error) {
+      console.log(error);
+      router.push('/login');
+    }
+  };
+
+  // TODO: take care of trying to update setUsername after component unmount, memory leak
   useEffect(() => {
     const getMetadata = async () => {
       try {
@@ -61,11 +61,15 @@ const Navbar = () => {
         </Link>
 
         <ul className={styles.navItems}>
-          <li className={styles.navItem} onClick={handleOnClickHome}>
-            Home
+          <li className={styles.navItem}>
+            <Link href='/'>
+              <a>Home</a>
+            </Link>
           </li>
-          <li className={styles.navItem2} onClick={handleOnClickMyList}>
-            My List
+          <li className={styles.navItem2}>
+            <Link href='/browse/my-list'>
+              <a>My List</a>
+            </Link>
           </li>
         </ul>
         <nav className={styles.navContainer}>
@@ -83,9 +87,9 @@ const Navbar = () => {
             {showDropdown && (
               <div className={styles.navDropdown}>
                 <div>
-                  <Link href='/login'>
-                    <a className={styles.linkName}>Sign out</a>
-                  </Link>
+                  <a className={styles.linkName} onClick={handleSignout}>
+                    Sign out
+                  </a>
                   <div className={styles.lineWrapper}></div>
                 </div>
               </div>
