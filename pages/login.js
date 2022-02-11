@@ -6,7 +6,6 @@ import Link from 'next/link';
 import styles from '../styles/Login.module.css';
 import { useRouter } from 'next/router';
 import { magic } from '../lib/magic';
-import { route } from 'next/dist/server/router';
 
 const Login = () => {
   const [email, setEmail] = useState('');

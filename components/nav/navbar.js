@@ -37,7 +37,7 @@ const Navbar = () => {
 
         setUsername(email);
       } catch (error) {
-        console.log(errror);
+        console.log(error);
       }
     };
 
