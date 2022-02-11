@@ -14,6 +14,10 @@ const Login = () => {
 
   const router = useRouter();
 
+  const handleRouterEvent = () => {
+    setIsLoading(false);
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -33,12 +37,12 @@ const Login = () => {
   };
 
   useEffect(() => {
-    router.events.on('routeChangeComplete', () => setIsLoading(false));
-    router.events.on('routeChangeError', () => setIsLoading(false));
+    router.events.on('routeChangeComplete', () => handleRouterEvent);
+    router.events.on('routeChangeError', () => handleRouterEvent);
 
     return () => {
-      router.events.off('routeChangeComplete');
-      router.events.off('routeChangeError');
+      router.events.off('routeChangeComplete', handleRouterEvent);
+      router.events.off('routeChangeError', handleRouterEvent);
     };
   }, [router]);
 

@@ -8,6 +8,10 @@ function MyApp({ Component, pageProps }) {
 
   const router = useRouter();
 
+  const handleRouterEvent = () => {
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     const manageRouting = async () => {
       const isLoggedIn = await magic.user.isLoggedIn();
@@ -19,14 +23,14 @@ function MyApp({ Component, pageProps }) {
       }
     };
 
-    router.events.on('routeChangeComplete', () => setIsLoading(false));
-    router.events.on('routeChangeError', () => setIsLoading(false));
+    router.events.on('routeChangeComplete', () => handleRouterEvent);
+    router.events.on('routeChangeError', () => handleRouterEvent);
 
     manageRouting();
 
     return () => {
-      router.events.off('routeChangeComplete');
-      router.events.off('routeChangeError');
+      router.events.off('routeChangeComplete', handleRouterEvent);
+      router.events.off('routeChangeError', handleRouterEvent);
     };
   }, [router]);
 
