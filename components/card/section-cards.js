@@ -10,12 +10,11 @@ const SectionCards = ({ title, videos = [], size }) => {
       <div className={clsx(styles.cardWrapper)}>
         {videos.length > 0
           ? videos.map((video) => (
-              <Card
-                key={video.id}
-                id={video.id}
-                imgUrl={video.imgUrl}
-                size={size}
-              />
+              <Link key={video.id} href={`/videos/${video.id}`}>
+                <a>
+                  <Card id={video.id} imgUrl={video.imgUrl} size={size} />
+                </a>
+              </Link>
             ))
           : 'loading..'}
       </div>

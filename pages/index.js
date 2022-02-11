@@ -22,6 +22,7 @@ export default function Home({
       <Navbar />
 
       <Banner
+        videoId='4zH5iYM4wJo'
         title='Pirates of the Caribbean'
         subTitle='The Curse of the Black Pearl'
         imgUrl='/static/pirates.jpg'
